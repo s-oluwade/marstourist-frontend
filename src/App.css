@@ -1,0 +1,108 @@
+html,
+body,
+:root,
+#root {
+    min-height: 100vh;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+html {
+    overflow-y: scroll;
+}
+.main {
+    height: auto;
+    /* box-sizing: border-box; */
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'] {
+    @apply my-1 focus:outline-none focus:ring-1;
+}
+textarea {
+    resize: none;
+    width: 100%;
+}
+#content {
+    display: flex;
+    width: 1100px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#blog {
+    @apply bg-base-100;
+    opacity: 0.9;
+    padding: 20px;
+    grid-column: span 5 / span 5;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+#side-content {
+    @apply bg-neutral;
+    padding: 5px;
+    grid-column: span 2 / span 2;
+    grid-column-start: 6;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+#home-page {
+    width: 100%;
+}
+#account-page > .content {
+    margin: 0 auto;
+    width: 948px;
+    height: 100%;
+    opacity: 0.97;
+}
+#profile-submenu li {
+    margin-top: 20px;
+}
+.separator {
+    border-top: 1px solid;
+}
+.background-image-fixed {
+    background-image: url('./img/background/space-earth-fantasy-spaceship-wallpaper-78e6cdf8b050bc9810cc41fe68d2d4ea.jpg');
+    background-size: cover;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: -10;
+    margin-bottom: auto;
+    background-position: 50%;
+    top: 0;
+}
+#blog .float-right {
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+#blog .float-left {
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+#blog p {
+    line-height: 1.75rem;
+    margin-top: 20px;
+}
+#blog header {
+    font-size: 2rem !important;
+}
+#blog h1 {
+    font-size: 1.5rem;
+    padding-top: 20px;
+}
+#blog h3 {
+    font-size: 1.25rem;
+    padding-top: 15px;
+}
+
+::selection {
+    color: hsl(var(--ac));
+    background: hsl(var(--a));
+}
+#shopping-categories-tabs a:not(.tab-active) {
+    @apply dark:text-neutral-content;
+}
