@@ -25,6 +25,12 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    echo listing /home/vsts/work/1/a/
+    ls  /home/vsts/work/1/a/
+    echo listing $(Build.ArtifactStagingDirectory)/dist
+    ls $(Build.ArtifactStagingDirectory)/dist
+    echo listing $(System.DefaultWorkingDirectory)/dist
+    ls $(System.DefaultWorkingDirectory)/dist
     npm install
     npm run build
   displayName: 'Install dependencies and build'
