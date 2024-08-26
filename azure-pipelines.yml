@@ -9,7 +9,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-
 # - task: AzureRmWebAppDeployment@4
 #   inputs:
 #     ConnectionType: 'AzureRM'
@@ -18,20 +17,55 @@ pool:
 #     WebAppName: 'marstourist'
 #     packageForLinux: '$(System.DefaultWorkingDirectory)/dist/**/*.zip'
 #     RuntimeStack: 'NODE|18-lts'
-stages:
-- stage: Build
-  displayName: 'Build Stage'
-  jobs:
-  - job: Build
-    displayName: 'Build Job'
-    steps:
-    - task: AzureWebApp@1
-      inputs:
-        azureSubscription: 'Pay-As-You-Go(1)(13e65171-96f6-4461-8ad3-fd780d069d91)'
-        appType: 'webApp'
-        appName: 'marstourist-windows'
-        deployToSlotOrASE: true
-        resourceGroupName: 'WebAppsAndApis'
-        slotName: 'production'
-        package: '$(System.DefaultWorkingDirectory)/dist/**/*.zip'
-        deploymentMethod: 'auto'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'Install dependencies and build'
+
+- script: |
+    mkdir -p $(Build.BinariesDirectory)
+    cp -r dist/* $(Build.BinariesDirectory)
+  displayName: 'Copy build output to binaries directory'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Pay-As-You-Go(1)(13e65171-96f6-4461-8ad3-fd780d069d91)'
+    appType: 'webApp'
+    appName: 'marstourist-windows'
+    deployToSlotOrASE: true
+    resourceGroupName: 'WebAppsAndApis'
+    slotName: 'production'
+    # package: '$(System.DefaultWorkingDirectory)/dist/**/*.zip'
+    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    deploymentMethod: 'auto'
+
+# stages:
+# - stage: Build
+#   displayName: 'Build Stage'
+#   jobs:
+#   - job: Build
+#     displayName: 'Build Job'
+#     steps:
+#     - task: AzureWebApp@1
+#       inputs:
+#         azureSubscription: 'Pay-As-You-Go(1)(13e65171-96f6-4461-8ad3-fd780d069d91)'
+#         appType: 'webApp'
+#         appName: 'marstourist-windows'
+#         deployToSlotOrASE: true
+#         resourceGroupName: 'WebAppsAndApis'
+#         slotName: 'production'
+#         package: '$(System.DefaultWorkingDirectory)/dist/**/*.zip'
+#         deploymentMethod: 'auto'
