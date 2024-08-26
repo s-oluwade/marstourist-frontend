@@ -57,7 +57,7 @@ steps:
     azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
     appType: 'webApp'
     WebAppName: 'marstourist-windows'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 # stages:
 # - stage: Build
 #   displayName: 'Build Stage'
