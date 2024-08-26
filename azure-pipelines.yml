@@ -25,6 +25,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    echo $(Build.BinariesDirectory)
     npm install
     npm run build
   displayName: 'Install dependencies and build'
