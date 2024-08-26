@@ -27,8 +27,6 @@ steps:
 - script: |
     echo $(Build.BinariesDirectory)
     ls $(Build.BinariesDirectory)
-    npm install
-    npm run build
   displayName: 'Install dependencies and build'
 
 # - script: |
