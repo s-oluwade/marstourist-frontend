@@ -41,6 +41,17 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
+    
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
+#     appType: 'webApp'
+#     WebAppName: 'marstourist-windows'
+#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
+
+
 # - task: AzureWebApp@1
 #   inputs:
 #     azureSubscription: 'Pay-As-You-Go(1)(13e65171-96f6-4461-8ad3-fd780d069d91)'
@@ -52,13 +63,7 @@ steps:
 #     # package: '$(System.DefaultWorkingDirectory)/dist/**/*.zip'
 #     package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 #     deploymentMethod: 'auto'
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
-    appType: 'webApp'
-    WebAppName: 'marstourist-windows'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
 # stages:
 # - stage: Build
 #   displayName: 'Build Stage'
