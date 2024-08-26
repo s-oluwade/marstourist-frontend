@@ -25,29 +25,29 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    echo $(Build.BinariesDirectory)
-    ls $(Build.BinariesDirectory)
+    npm install
+    npm run build
   displayName: 'Install dependencies and build'
 
 # - script: |
 #     mkdir -p $(Build.BinariesDirectory)
 #     cp -r dist/* $(Build.BinariesDirectory)
 #   displayName: 'Copy build output to binaries directory'
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '$(Build.BinariesDirectory)'
-#     includeRootFolder: true
-#     archiveType: 'zip'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/dist'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/dist/$(Build.BuildId).zip'
+    replaceExistingArchive: true
     
-# - task: AzureRmWebAppDeployment@4
-#   inputs:
-#     ConnectionType: 'AzureRM'
-#     azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
-#     appType: 'webApp'
-#     WebAppName: 'marstourist-windows'
-#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
+    appType: 'webApp'
+    WebAppName: 'marstourist-windows'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/dist/$(Build.BuildId).zip'
 
 
 
