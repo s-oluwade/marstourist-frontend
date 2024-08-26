@@ -45,10 +45,10 @@ steps:
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
-    appType: 'webApp'
-    WebAppName: 'marstourist-windows'
+    appType: 'webAppLinux'
+    WebAppName: 'marstourist'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/dist/$(Build.BuildId).zip'
-
+    RuntimeStack: 'NODE|18-lts'
 
 
 # - task: AzureWebApp@1
