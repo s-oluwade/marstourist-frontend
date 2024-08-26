@@ -29,10 +29,10 @@ steps:
     npm run build
   displayName: 'Install dependencies and build'
 
-- script: |
-    mkdir -p $(Build.BinariesDirectory)
-    cp -r dist/* $(Build.BinariesDirectory)
-  displayName: 'Copy build output to binaries directory'
+# - script: |
+#     mkdir -p $(Build.BinariesDirectory)
+#     cp -r dist/* $(Build.BinariesDirectory)
+#   displayName: 'Copy build output to binaries directory'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
@@ -40,18 +40,24 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
-- task: AzureWebApp@1
+# - task: AzureWebApp@1
+#   inputs:
+#     azureSubscription: 'Pay-As-You-Go(1)(13e65171-96f6-4461-8ad3-fd780d069d91)'
+#     appType: 'webApp'
+#     appName: 'marstourist-windows'
+#     deployToSlotOrASE: true
+#     resourceGroupName: 'WebAppsAndApis'
+#     slotName: 'production'
+#     # package: '$(System.DefaultWorkingDirectory)/dist/**/*.zip'
+#     package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     deploymentMethod: 'auto'
+- task: AzureRmWebAppDeployment@4
   inputs:
-    azureSubscription: 'Pay-As-You-Go(1)(13e65171-96f6-4461-8ad3-fd780d069d91)'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
     appType: 'webApp'
-    appName: 'marstourist-windows'
-    deployToSlotOrASE: true
-    resourceGroupName: 'WebAppsAndApis'
-    slotName: 'production'
-    # package: '$(System.DefaultWorkingDirectory)/dist/**/*.zip'
-    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    deploymentMethod: 'auto'
-
+    WebAppName: 'marstourist-windows'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 # stages:
 # - stage: Build
 #   displayName: 'Build Stage'
