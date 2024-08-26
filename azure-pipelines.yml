@@ -35,13 +35,13 @@ steps:
 #     mkdir -p $(Build.BinariesDirectory)
 #     cp -r dist/* $(Build.BinariesDirectory)
 #   displayName: 'Copy build output to binaries directory'
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(Build.BinariesDirectory)'
+#     includeRootFolder: true
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
     
 # - task: AzureRmWebAppDeployment@4
 #   inputs:
