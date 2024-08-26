@@ -25,10 +25,6 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    echo listing /home/vsts/work/1/a/
-    ls  /home/vsts/work/1/a/
-    echo listing $(Build.ArtifactStagingDirectory)/dist
-    ls $(Build.ArtifactStagingDirectory)/dist
     echo listing $(System.DefaultWorkingDirectory)/dist
     ls $(System.DefaultWorkingDirectory)/dist
     npm install
@@ -41,10 +37,10 @@ steps:
 #   displayName: 'Copy build output to binaries directory'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/dist'
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/dist'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/dist/$(Build.BuildId).zip'
+    archiveFile: '$(System.DefaultWorkingDirectory)/dist/$(Build.BuildId).zip'
     replaceExistingArchive: true
     
 - task: AzureRmWebAppDeployment@4
@@ -53,7 +49,7 @@ steps:
     azureSubscription: 'Pay-As-You-Go(2)(13e65171-96f6-4461-8ad3-fd780d069d91)'
     appType: 'webAppLinux'
     WebAppName: 'marstourist'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/dist/$(Build.BuildId).zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/dist/$(Build.BuildId).zip'
     RuntimeStack: 'NODE|18-lts'
 
 
