@@ -294,7 +294,7 @@ const Layout = () => {
                                                     <span className='flex-1 whitespace-nowrap '>
                                                         Cart (
                                                         {cart && cart.products
-                                                            ? cart.products['total'] &&
+                                                            && cart.products['total'] ?
                                                               cart.products['total'].count
                                                             : 0}
                                                         )
