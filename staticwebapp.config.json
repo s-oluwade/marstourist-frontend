@@ -1,6 +1,14 @@
 {
     "routes": [
       {
+        "route": "/assets/*",
+        "allowedRoles": ["anonymous"]
+      },
+      {
+        "route": "/favicon.ico",
+        "allowedRoles": ["anonymous"]
+      },
+      {
         "route": "/*",
         "rewrite": "/index.html"
       }
