@@ -25,13 +25,15 @@ const Layout = () => {
             .get<Activity[]>('/activities')
             .then((response) => {
                 const data = response.data;
-                data.sort((a, b) =>
-                    new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
-                        ? 1
-                        : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
-                        ? -1
-                        : 0
-                );
+                if (data) {
+                    data.sort((a, b) =>
+                        new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
+                            ? 1
+                            : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+                            ? -1
+                            : 0
+                    );
+                }
                 setActivities(data);
             })
             .catch((error) => {
