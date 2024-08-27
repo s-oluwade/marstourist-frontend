@@ -293,7 +293,7 @@ const Layout = () => {
                                                 <div className='indicator'>
                                                     <span className='flex-1 whitespace-nowrap '>
                                                         Cart (
-                                                        {cart
+                                                        {cart && cart.products
                                                             ? cart.products['total'] &&
                                                               cart.products['total'].count
                                                             : 0}
