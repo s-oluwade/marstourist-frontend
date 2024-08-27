@@ -26,6 +26,7 @@ const Layout = () => {
             .then((response) => {
                 const data = response.data;
                 if (data) {
+                    console.log(data);
                     data.sort((a, b) =>
                         new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
                             ? 1
