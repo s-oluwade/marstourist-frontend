@@ -9,7 +9,7 @@ const Header = () => {
         window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     const { user, admin } = useContext(AuthContext);
-    const { cart, userAvatar } = useContext(UserContext);
+    const { userAvatar } = useContext(UserContext);
     const [logout, setLogout] = useState(false);
     const [darkMode, setDarkMode] = useState(browserIsDarkMode);
 
@@ -83,9 +83,10 @@ const Header = () => {
             >
                 <div className='flex-none md:hidden'>
                     <div className='indicator'>
-                        {cart && cart.products['total'] && cart.products['total'].count > 0 && (
-                            <span className='badge badge-secondary badge-xs indicator-item right-2 top-2'></span>
-                        )}
+                        {/* {cart && cart.products['total'] && cart.products['total'].count > 0 && (
+                        <span className='badge badge-secondary badge-xs indicator-item right-2 top-2'></span>
+                        )} */}
+                        <span className='badge badge-secondary badge-xs indicator-item right-2 top-2'></span>
                         <label htmlFor='my-drawer-3' className='btn-ghost btn-square btn-sm btn'>
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
@@ -187,12 +188,13 @@ const Header = () => {
                                                 d='M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z'
                                             />
                                         </svg>
-                                        <span className='badge badge-sm indicator-item font-medium'>
+                                        {/* <span className='badge badge-sm indicator-item font-medium'>
                                             {cart
                                                 ? cart.products['total'] &&
                                                   cart.products['total'].count
                                                 : 0}
-                                        </span>
+                                        </span> */}
+                                        <span className='badge badge-sm indicator-item font-medium'>0</span>
                                     </div>
                                 </label>
                             </Link>

@@ -13,7 +13,7 @@ import { User } from './models/user';
 
 const Layout = () => {
     const { user, loadingUser, admin, loadingAdmin } = useContext(AuthContext);
-    const { userAvatar, cart } = useContext(UserContext);
+    const { userAvatar } = useContext(UserContext);
     const currentPath = window.location.pathname;
 
     const { setActivities, setAllUsers } = useContext(GlobalContext);
@@ -25,15 +25,15 @@ const Layout = () => {
             .get<Activity[]>('/activities')
             .then((response) => {
                 const data = response.data;
-                // if (data) {
-                //     data.sort((a, b) =>
-                //         new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
-                //             ? 1
-                //             : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
-                //             ? -1
-                //             : 0
-                //     );
-                // }
+                if (data) {
+                    data.sort((a, b) =>
+                        new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
+                            ? 1
+                            : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+                            ? -1
+                            : 0
+                    );
+                }
                 setActivities(data);
             })
             .catch((error) => {
@@ -294,12 +294,7 @@ const Layout = () => {
                                                 </svg>
                                                 <div className='indicator'>
                                                     <span className='flex-1 whitespace-nowrap '>
-                                                        Cart (
-                                                        {cart && cart.products
-                                                            && cart.products['total'] ?
-                                                              cart.products['total'].count
-                                                            : 0}
-                                                        )
+                                                        Cart (0)
                                                     </span>
                                                 </div>
                                             </Link>
