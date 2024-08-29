@@ -27,13 +27,13 @@ const Layout = () => {
                 const data = response.data;
                 if (data) {
                     console.log(data);
-                    data.sort((a, b) =>
-                        new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
-                            ? 1
-                            : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
-                            ? -1
-                            : 0
-                    );
+                    // data.sort((a, b) =>
+                    //     new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
+                    //         ? 1
+                    //         : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
+                    //         ? -1
+                    //         : 0
+                    // );
                 }
                 setActivities(data);
             })
