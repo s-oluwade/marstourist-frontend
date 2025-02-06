@@ -35,6 +35,7 @@ const ActivitiesPage = () => {
         }
         
     }
+    console.log(activities)
 
     function sortByCreatedAt(posts: Activity[]) {
         return posts.sort((a, b) =>
@@ -44,7 +45,7 @@ const ActivitiesPage = () => {
 
     function isLikedPost(post: Activity) {
         if (user) {
-            return post.likes.map((like) => like.userId).includes(user._id);
+            return post?.likes.map((like) => like.userId).includes(user._id);
         }
         return false;
     }
@@ -53,7 +54,7 @@ const ActivitiesPage = () => {
         <div className='mx-auto'>
             <div className='mx-12 mt-6 flex max-w-5xl flex-col'>
                 <ol className={`relative`}>
-                    {activities.map((activity, index) =>
+                    {activities?.map((activity, index) =>
                         activity.activityType === 'post' ? (
                             <li
                                 className={`pb-10 ${
@@ -126,7 +127,7 @@ const ActivitiesPage = () => {
                                                     className={`${
                                                         activity.likes.length > 0 ? 'tooltip' : ''
                                                     } tooltip-close tooltip-left md:tooltip-top`}
-                                                    data-tip={activity.likes
+                                                    data-tip={activity?.likes
                                                         .map((like) => like.name)
                                                         .join(', ')}
                                                 >
