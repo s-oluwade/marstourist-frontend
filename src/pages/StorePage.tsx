@@ -17,7 +17,7 @@ const StorePage = () => {
         axios
             .get('/products')
             .then((response) => {
-                const products = response.data;
+                const products = Array.isArray(response.data) ? response.data : [];
                 setProducts(products);
             })
             .catch((error) => {
@@ -34,29 +34,41 @@ const StorePage = () => {
                     temp.push(product.category);
                 }
                 setCategories([...new Set(temp)]);
-            } else {
-                if (category == 'all') {
-                    setFilteredProducts(products);
-                } else {
-                    const temp = products.filter((product) => product.category === category);
-                    if (JSON.stringify(temp) !== JSON.stringify(filteredProducts)) {
-                        setFilteredProducts(
-                            products.filter((product) => product.category == category)
-                        );
-                    }
-                }
-
-                // category has changed, switch tab class
-                if (!selectedTab.includes(category)) {
-                    document.getElementById(selectedTab)?.classList.remove('tab-active');
-                    document.getElementById(`tab-${category}`)?.classList.add('tab-active');
-                    setSelectedTab(`tab-${category}`);
-                }
+            } 
+            else {
+                const filtered = category === 'all' ? products : products.filter((product) => product.category === category);
+                setFilteredProducts(filtered);
             }
+
+            // Switch tab class when category changes
+            if (!selectedTab.includes(category)) {
+                document.getElementById(selectedTab)?.classList.remove('tab-active');
+                document.getElementById(`tab-${category}`)?.classList.add('tab-active');
+                setSelectedTab(`tab-${category}`);
+            }
+            // else {
+            //     if (category == 'all') {
+            //         setFilteredProducts(products);
+            //     } else {
+            //         const temp = products.filter((product) => product.category === category);
+            //         if (JSON.stringify(temp) !== JSON.stringify(filteredProducts)) {
+            //             setFilteredProducts(
+            //                 products.filter((product) => product.category == category)
+            //             );
+            //         }
+            //     }
+
+            //     // category has changed, switch tab class
+            //     if (!selectedTab.includes(category)) {
+            //         document.getElementById(selectedTab)?.classList.remove('tab-active');
+            //         document.getElementById(`tab-${category}`)?.classList.add('tab-active');
+            //         setSelectedTab(`tab-${category}`);
+            //     }
+            // }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [products, filteredProducts, categories, category]);
+    }, [products, categories, category]);
 
     async function addToCart(e: React.MouseEvent<HTMLButtonElement>, id: string) {
         e.preventDefault();
@@ -198,6 +210,7 @@ const StorePage = () => {
                                 </svg>
                             </a>
                             <img
+                                alt='modal image'
                                 id='modal-image'
                                 className='max-h-[37.5rem] max-w-[50rem] object-cover'
                             />
