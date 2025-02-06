@@ -16,34 +16,30 @@ const ActivitiesPage = () => {
     const { activities, setActivities, allUsers } = useContext(GlobalContext);
 
     async function likePost(id: string) {
-        const { data } = await axios.put<Activity | null>('/activities/posts/like/' + id);
+        try {
+            const { data } = await axios.put<Activity | null>('/activities/posts/like/' + id);
 
-        if (data) {
-            const allPostsUpdate = activities.filter((each) => each._id !== data._id);
-            allPostsUpdate.push(data);
-            allPostsUpdate.sort((a, b) =>
-                new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
-                    ? 1
-                    : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
-                    ? -1
-                    : 0
-            );
+            if (data) {
+                const allPostsUpdate = sortByCreatedAt(activities.filter((each) => each._id !== data._id).concat(data));
 
-            if (data.userId === user?._id) {
-                const userPostsUpdate = userPosts.filter((each) => each._id !== data._id);
-                userPostsUpdate.push(data);
-                userPostsUpdate.sort((a, b) =>
-                    new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
-                        ? 1
-                        : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
-                        ? -1
-                        : 0
-                );
-                setUserPosts([...userPostsUpdate]);
+                if (data.userId === user?._id) {
+                    const userPostsUpdate = sortByCreatedAt(userPosts.filter((each) => each._id !== data._id).concat(data));
+                    setUserPosts([...userPostsUpdate]);
+                }
+
+                setActivities([...allPostsUpdate]);
             }
-
-            setActivities([...allPostsUpdate]);
+        } catch (error) {
+            console.error('Error liking post:', error);
+            alert('Failed to like post');
         }
+        
+    }
+
+    function sortByCreatedAt(posts: Activity[]) {
+        return posts.sort((a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
     }
 
     function isLikedPost(post: Activity) {
@@ -91,10 +87,7 @@ const ActivitiesPage = () => {
                                                                 ? 'profile'
                                                                 : 'peer'
                                                         }/${
-                                                            allUsers.filter(
-                                                                (each) =>
-                                                                    each._id === activity.userId
-                                                            )[0].username
+                                                            allUsers.find((each) => each._id === activity.userId)?.username
                                                         }`}
                                                     >
                                                         {activity.owner}
@@ -203,9 +196,7 @@ const ActivitiesPage = () => {
                                                             ? 'profile'
                                                             : 'peer'
                                                     }/${
-                                                        allUsers.filter(
-                                                            (each) => each._id === activity.userId
-                                                        )[0].username
+                                                        allUsers.find((each) => each._id === activity.userId)?.username
                                                     }`}
                                                 >
                                                     {activity.owner}
@@ -264,10 +255,7 @@ const ActivitiesPage = () => {
                                                                 ? 'profile'
                                                                 : 'peer'
                                                         }/${
-                                                            allUsers.filter(
-                                                                (each) =>
-                                                                    each._id === activity.userId
-                                                            )[0].username
+                                                            allUsers.find((each) => each._id === activity.userId)?.username
                                                         }`}
                                                     >
                                                         {activity.owner}
