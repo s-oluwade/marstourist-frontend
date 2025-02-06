@@ -20,10 +20,14 @@ const ActivitiesPage = () => {
             const { data } = await axios.put<Activity | null>('/activities/posts/like/' + id);
 
             if (data) {
-                const allPostsUpdate = sortByCreatedAt(activities.filter((each) => each._id !== data._id).concat(data));
+                const allPostsUpdate = sortByCreatedAt(
+                    activities.filter((each) => each._id !== data._id).concat(data)
+                );
 
                 if (data.userId === user?._id) {
-                    const userPostsUpdate = sortByCreatedAt(userPosts.filter((each) => each._id !== data._id).concat(data));
+                    const userPostsUpdate = sortByCreatedAt(
+                        userPosts.filter((each) => each._id !== data._id).concat(data)
+                    );
                     setUserPosts([...userPostsUpdate]);
                 }
 
@@ -33,19 +37,17 @@ const ActivitiesPage = () => {
             console.error('Error liking post:', error);
             alert('Failed to like post');
         }
-        
     }
-    console.log(activities)
 
     function sortByCreatedAt(posts: Activity[]) {
-        return posts.sort((a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        return posts.sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
     }
 
     function isLikedPost(post: Activity) {
         if (user) {
-            return post?.likes.map((like) => like.userId).includes(user._id);
+            return post?.likes?.map((like) => like.userId).includes(user._id);
         }
         return false;
     }
@@ -88,7 +90,10 @@ const ActivitiesPage = () => {
                                                                 ? 'profile'
                                                                 : 'peer'
                                                         }/${
-                                                            allUsers.find((each) => each._id === activity.userId)?.username
+                                                            allUsers.find(
+                                                                (each) =>
+                                                                    each._id === activity.userId
+                                                            )?.username
                                                         }`}
                                                     >
                                                         {activity.owner}
@@ -122,12 +127,10 @@ const ActivitiesPage = () => {
                                         </div>
                                         <div className='flex gap-6 rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs font-normal italic text-gray-900 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-300'>
                                             <div className='grow'>{activity.content}</div>
-                                            {user && (
+                                            {activity.likes.length > 0 && (
                                                 <div
-                                                    className={`${
-                                                        activity.likes.length > 0 ? 'tooltip' : ''
-                                                    } tooltip-close tooltip-left md:tooltip-top`}
-                                                    data-tip={activity?.likes
+                                                    className='tooltip-close tooltip-left md:tooltip-top'
+                                                    data-tip={activity.likes
                                                         .map((like) => like.name)
                                                         .join(', ')}
                                                 >
@@ -197,7 +200,9 @@ const ActivitiesPage = () => {
                                                             ? 'profile'
                                                             : 'peer'
                                                     }/${
-                                                        allUsers.find((each) => each._id === activity.userId)?.username
+                                                        allUsers.find(
+                                                            (each) => each._id === activity.userId
+                                                        )?.username
                                                     }`}
                                                 >
                                                     {activity.owner}
@@ -256,7 +261,10 @@ const ActivitiesPage = () => {
                                                                 ? 'profile'
                                                                 : 'peer'
                                                         }/${
-                                                            allUsers.find((each) => each._id === activity.userId)?.username
+                                                            allUsers.find(
+                                                                (each) =>
+                                                                    each._id === activity.userId
+                                                            )?.username
                                                         }`}
                                                     >
                                                         {activity.owner}
